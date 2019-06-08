@@ -1,0 +1,242 @@
+unit gjordan;
+
+interface
+
+  uses
+  IntervalArithmetic32and64;
+
+  type
+  vector  = array of Extended;
+  vector1 = array of Extended;
+  vector2 = array of Integer;
+  vectorInt  = array of Interval;
+  vectorInt1 = array of Interval;
+  coefficients = procedure (i : Integer;
+                            var a : vector1);
+  coefficientsInt = procedure (i : Integer;
+                            var a : vectorInt1);
+
+  procedure GaussJordanNormal (
+            n      : Integer;
+            oneeqn : coefficients;
+            var x  : vector;
+            var st : Integer);
+
+  procedure GaussJordanInterval (
+            n      : Integer;
+            oneeqn : coefficientsInt;
+            var x  : vectorInt;
+            var st : Integer);
+
+implementation
+
+procedure GaussJordanNormal;
+var i,j,jh,k,kh,l,lh,n1,p,q,rh : Integer;
+    max,s                      : Extended;
+    a,b                        : vector1;
+    r                          : vector2;
+begin
+
+  SetLength(a,n+2);
+  SetLength(b,n+2);
+  SetLength(r,n+2);
+  st:=0;
+  if n<1
+    then st:=1;
+  if st=0
+    then begin
+           n1:=n+1;
+           p:=n1;
+           for i:=1 to n1 do
+             r[i]:=0;
+           k:=0;
+           repeat
+             k:=k+1;
+             oneeqn (k,a);
+             for i:=1 to n do
+               begin
+                 rh:=r[i];
+                 if rh<>0
+                   then b[rh]:=a[i]
+               end;
+             kh:=k-1;
+             l:=0;
+             max:=0;
+             for j:=1 to n1 do
+               if r[j]=0
+                 then begin
+                        s:=a[j];
+                        l:=l+1;
+                        q:=l;
+                        for i:=1 to kh do
+                          begin
+                            s:=s-b[i]*x[q];
+                            q:=q+p
+                          end;
+                        a[l]:=s;
+                        s:=abs(s);
+                        if (j<n1) and (s>max)
+                          then begin
+                                 max:=s;
+                                 jh:=j;
+                                 lh:=l
+                               end
+                      end;
+             if max=0
+               then st:=2
+               else begin
+                      max:=1/a[lh];
+                      r[jh]:=k;
+                      for i:=1 to p do
+                        a[i]:=max*a[i];
+                      jh:=0;
+                      q:=0;
+                      for j:=1 to kh do
+                        begin
+                          s:=x[q+lh];
+                          for i:=1 to p do
+                            if i<>lh
+                              then begin
+                                     jh:=jh+1;
+                                     x[jh]:=x[q+i]-s*a[i]
+                                   end;
+                          q:=q+p
+                        end;
+                      for i:=1 to p do
+                        if i<>lh
+                          then begin
+                                 jh:=jh+1;
+                                 x[jh]:=a[i]
+                               end;
+                      p:=p-1
+                    end
+           until (k=n) or (st=2);
+           if st=0
+             then for k:=1 to n do
+                    begin
+                      rh:=r[k];
+                      if rh<>k
+                        then begin
+                               s:=x[k];
+                               x[k]:=x[rh];
+                               i:=r[rh];
+                               while i<>k do
+                                 begin
+                                   x[rh]:=x[i];
+                                   r[rh]:=rh;
+                                   rh:=i;
+                                   i:=r[rh]
+                                 end;
+                               x[rh]:=s;
+                               r[rh]:=rh
+                             end
+                    end
+         end
+end;
+
+procedure GaussJordanInterval;
+var i,j,jh,k,kh,l,lh,n1,p,q,rh : Integer;
+    max,s                      : Interval;
+    a,b                        : vectorInt1;
+    r                          : vector2;
+begin
+
+  SetLength(a,n+2);
+  SetLength(b,n+2);
+  SetLength(r,n+2);
+  st:=0;
+  if n<1
+    then st:=1;
+  if st=0
+    then begin
+           n1:=n+1;
+           p:=n1;
+           for i:=1 to n1 do
+             r[i]:=0;
+           k:=0;
+           repeat
+             k:=k+1;
+             oneeqn (k,a);
+             for i:=1 to n do
+               begin
+                 rh:=r[i];
+                 if rh<>0
+                   then b[rh]:=a[i]
+               end;
+             kh:=k-1;
+             l:=0;
+             max:=0;
+             for j:=1 to n1 do
+               if r[j]=0
+                 then begin
+                        s:=a[j];
+                        l:=l+1;
+                        q:=l;
+                        for i:=1 to kh do
+                          begin
+                            s:=s-b[i]*x[q];
+                            q:=q+p
+                          end;
+                        a[l]:=s;
+                        s:=abs(s);
+                        if (j<n1) and (s>max)
+                          then begin
+                                 max:=s;
+                                 jh:=j;
+                                 lh:=l
+                               end
+                      end;
+             if max=0
+               then st:=2
+               else begin
+                      max:=1/a[lh];
+                      r[jh]:=k;
+                      for i:=1 to p do
+                        a[i]:=max*a[i];
+                      jh:=0;
+                      q:=0;
+                      for j:=1 to kh do
+                        begin
+                          s:=x[q+lh];
+                          for i:=1 to p do
+                            if i<>lh
+                              then begin
+                                     jh:=jh+1;
+                                     x[jh]:=x[q+i]-s*a[i]
+                                   end;
+                          q:=q+p
+                        end;
+                      for i:=1 to p do
+                        if i<>lh
+                          then begin
+                                 jh:=jh+1;
+                                 x[jh]:=a[i]
+                               end;
+                      p:=p-1
+                    end
+           until (k=n) or (st=2);
+           if st=0
+             then for k:=1 to n do
+                    begin
+                      rh:=r[k];
+                      if rh<>k
+                        then begin
+                               s:=x[k];
+                               x[k]:=x[rh];
+                               i:=r[rh];
+                               while i<>k do
+                                 begin
+                                   x[rh]:=x[i];
+                                   r[rh]:=rh;
+                                   rh:=i;
+                                   i:=r[rh]
+                                 end;
+                               x[rh]:=s;
+                               r[rh]:=rh
+                             end
+                    end
+         end
+end;
+
+
+end.

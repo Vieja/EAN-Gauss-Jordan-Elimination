@@ -1,0 +1,108 @@
+unit main;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, System.Math,IntervalArithmetic32and64, gjordan;
+
+type
+
+    matrix = array of vector;
+
+  TForm1 = class(TForm)
+    Button1: TButton;
+    Button2: TButton;
+    Button3: TButton;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Memo1: TMemo;
+    Memo2: TMemo;
+    procedure Button3Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+
+    procedure Normal();
+  private
+    { Private declarations }
+    przedzialowa: boolean;
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+  n: Integer; // liczba rownan oraz niewiadomych
+  nn : Integer;
+  dane: matrix;  // wartosci elementow macierzy
+
+procedure oneeqn(i : Integer;
+                 var a : vector1); far;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.Button3Click(Sender: TObject);
+begin
+  przedzialowa := false;
+  Label2.Caption := 'zmiennopozycyjna'
+end;
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+  if not przedzialowa then
+    Normal()
+end;
+
+procedure TForm1.Button2Click(Sender: TObject);
+begin
+  przedzialowa := true;
+  Label2.Caption := 'przedzialowa'
+end;
+
+procedure TForm1.Normal();
+var
+  wspolczynnikiStringList: TStringList;    // wspó³czynniki jako stringi
+  i: Integer;
+  j: Integer;
+  test : vector;
+  st : Integer;
+begin
+  n := Memo1.Lines.Count;
+  SetLength(dane, n+1);
+  for i := 1 to n do
+  begin
+    SetLength(dane[i], n+2);
+    wspolczynnikiStringList := TStringList.Create;
+    ExtractStrings([';'], [], PChar(Memo1.Lines[i-1]), wspolczynnikiStringList);
+    for j := 1 to n+1 do
+    begin
+      dane[i][j] := StrToFloat(wspolczynnikiStringList[j-1]);
+    end;
+  end;
+  SetLength(test,Ceil((n+2)*(n+2)/4)+1);
+  GaussJordanNormal(n,oneeqn,test,st);
+
+  Memo2.Clear;
+  for i := 1 to n do
+  begin
+    Memo2.Lines.Add('x[' + IntToStr(i) + '] = ' + FloatToStrF(test[i], ffExponent, 15, 4));
+  end;
+end;
+
+procedure oneeqn(i : Integer;
+                 var a : vector1);
+var
+   j : Integer;
+begin
+  //SetLength(a,n+1);
+  for j := 1 to n+1 do
+  begin
+    a[j] := dane[i][j];
+  end;
+end;
+
+end.

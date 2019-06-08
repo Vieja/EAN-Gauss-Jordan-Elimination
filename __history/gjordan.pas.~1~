@@ -1,0 +1,23 @@
+unit gjordan;
+
+interface
+
+  uses
+  IntervalArithmetic32and64;
+
+  type
+  vector1 = array of Extended;
+  vector2 = array of Integer;
+
+  coefficients = procedure (i,n : Integer;
+                            var a : vector1);
+
+  procedure GaussJordanNormal (
+            n      : Integer;
+            oneeqn : coefficients;
+            var x  : vector1;
+            var st : Integer);
+
+implementation
+
+end.

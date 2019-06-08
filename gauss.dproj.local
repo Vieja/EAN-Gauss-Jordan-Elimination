@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899-12-30 00:00:00.000.495,=D:\Aplikacje\Embarcadero\Unit1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.094,D:\Aplikacje\Embarcadero\gauss\main.dfm=D:\Aplikacje\Embarcadero\Unit1.dfm</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.615,D:\Aplikacje\Embarcadero\gauss\gauss.dproj=D:\Aplikacje\Embarcadero\Project1.dproj</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.094,D:\Aplikacje\Embarcadero\gauss\main.pas=D:\Aplikacje\Embarcadero\Unit1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.231,=D:\Aplikacje\Embarcadero\gauss\Unit1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.217,D:\Aplikacje\Embarcadero\gauss\Unit1.pas=D:\Aplikacje\Embarcadero\gauss\gjordan.pas</Transaction>
+  </Transactions>
+</BorlandProject>
