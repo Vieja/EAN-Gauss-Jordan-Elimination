@@ -3,7 +3,7 @@ object Form1: TForm1
   Top = 0
   Caption = 'Form1'
   ClientHeight = 561
-  ClientWidth = 882
+  ClientWidth = 898
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -22,21 +22,21 @@ object Form1: TForm1
     Caption = 'Macierz A:'
   end
   object Label1: TLabel
-    Left = 460
-    Top = 104
+    Left = 36
+    Top = 334
     Width = 69
     Height = 16
     Caption = 'Arytmetyka:'
   end
   object Label2: TLabel
-    Left = 535
-    Top = 104
+    Left = 111
+    Top = 334
     Width = 4
     Height = 16
   end
   object Label4: TLabel
-    Left = 16
-    Top = 184
+    Left = 384
+    Top = 194
     Width = 42
     Height = 16
     Caption = 'Wyniki:'
@@ -44,7 +44,7 @@ object Form1: TForm1
   object Memo1: TMemo
     Left = 8
     Top = 24
-    Width = 409
+    Width = 849
     Height = 145
     Lines.Strings = (
       '3;1;6;2'
@@ -53,8 +53,8 @@ object Form1: TForm1
     TabOrder = 0
   end
   object Button1: TButton
-    Left = 674
-    Top = 125
+    Left = 234
+    Top = 355
     Width = 103
     Height = 25
     Caption = 'Oblicz'
@@ -62,8 +62,8 @@ object Form1: TForm1
     OnClick = Button1Click
   end
   object Button2: TButton
-    Left = 658
-    Top = 61
+    Left = 218
+    Top = 291
     Width = 135
     Height = 24
     Caption = 'Przedzia'#322'owa'
@@ -71,8 +71,8 @@ object Form1: TForm1
     OnClick = Button2Click
   end
   object Button3: TButton
-    Left = 658
-    Top = 31
+    Left = 218
+    Top = 261
     Width = 135
     Height = 24
     Caption = 'Zmiennopozycyjna'
@@ -80,16 +80,16 @@ object Form1: TForm1
     OnClick = Button3Click
   end
   object Memo2: TMemo
-    Left = 16
-    Top = 203
-    Width = 821
+    Left = 384
+    Top = 213
+    Width = 473
     Height = 254
     ReadOnly = True
     TabOrder = 4
   end
   object Button4: TButton
-    Left = 384
-    Top = 480
+    Left = 752
+    Top = 490
     Width = 75
     Height = 25
     Caption = 'Wyszysc'

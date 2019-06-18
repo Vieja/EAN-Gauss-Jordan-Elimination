@@ -10,11 +10,10 @@ interface
   vector1 = array of Extended;
   vector2 = array of Integer;
   vectorInt  = array of Interval;
-  vectorInt1 = array of Interval;
   coefficients = procedure (i : Integer;
                             var a : vector1);
   coefficientsInt = procedure (i : Integer;
-                            var a : vectorInt1);
+                            var a : vectorInt);
 
   procedure GaussJordanNormal (
             n      : Integer;
@@ -37,9 +36,9 @@ var i,j,jh,k,kh,l,lh,n1,p,q,rh : Integer;
     r                          : vector2;
 begin
 
-  SetLength(a,n+2);
-  SetLength(b,n+2);
-  SetLength(r,n+2);
+  SetLength(a,n+1);
+  SetLength(b,n+1);
+  SetLength(r,n+1);
   st:=0;
   if n<1
     then st:=1;
@@ -137,13 +136,12 @@ end;
 procedure GaussJordanInterval;
 var i,j,jh,k,kh,l,lh,n1,p,q,rh : Integer;
     max,s                      : Interval;
-    a,b                        : vectorInt1;
+    a,b                        : vectorInt;
     r                          : vector2;
 begin
-
-  SetLength(a,n+2);
-  SetLength(b,n+2);
-  SetLength(r,n+2);
+  SetLength(a,n+1);
+  SetLength(b,n+1);
+  SetLength(r,n+1);
   st:=0;
   if n<1
     then st:=1;

@@ -45,7 +45,7 @@ var
 procedure oneeqn(i : Integer;
                  var a : vector1); far;
 procedure oneeqnInt(i : Integer;
-                 var a : vectorInt1); far;
+                 var a : vectorInt); far;
 
 implementation
 
@@ -83,6 +83,7 @@ var
   j: Integer;
   x : vector;
   st : Integer;
+  tmp: String;
 begin
   n := Memo1.Lines.Count;
   SetLength(dane, n+1);
@@ -93,6 +94,19 @@ begin
     ExtractStrings([';'], [], PChar(Memo1.Lines[i-1]), wspolczynnikiStringList);
     for j := 1 to n+1 do
     begin
+      tmp := wspolczynnikiStringList[j-1];
+      if tmp.StartsWith('[') then
+        begin
+        Memo2.Lines.Add('Nie mozna obliczyc w arytmetyce zmiennopozycyjnej');
+        exit
+        end
+      else
+      if not TryStrToFloat(wspolczynnikiStringList[j-1],dane[i][j]) then
+      begin
+         Memo2.Lines.Add('Bledbe dane: nie mozna zamienic na float');
+         exit
+      end
+      else
       dane[i][j] := StrToFloat(wspolczynnikiStringList[j-1]);
     end;
   end;
@@ -155,6 +169,7 @@ begin
 
 end;
 
+
 procedure oneeqn(i : Integer;
                  var a : vector1);
 var
@@ -167,7 +182,7 @@ begin
 end;
 
 procedure oneeqnInt(i : Integer;
-                 var a : vectorInt1);
+                 var a : vectorInt);
 var
    j : Integer;
 begin
